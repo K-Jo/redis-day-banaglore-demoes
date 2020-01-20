@@ -17,6 +17,11 @@ services:
     depends_on:
       - redisearch
     command: ['import.py', '--url', 'redis://redisearch:6379']
+  beerloader-graph:
+    build: ./beerloader-graph/.
+    depends_on:
+      - redisgraph
+    command: ['redisgraph-bulk-loader/bulk_insert.py', 'beerGraph', '-h', 'redisgraph']
   redisinight:
     image: "redislabs/redisinsight:1.1.0"
     ports:

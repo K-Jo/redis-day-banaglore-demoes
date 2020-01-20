@@ -4,6 +4,6 @@ WORKDIR /app
 ADD . /app
 
 RUN set -ex; \
-    pip install -r requirements.txt;
+    pip install -r redisgraph-bulk-loader/requirements.txt;
 
 ENTRYPOINT [ "python3" ]

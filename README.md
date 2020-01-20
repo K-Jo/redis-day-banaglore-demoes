@@ -1,3 +1,5 @@
+# NEEDS UPDATING
+
 # rediseach-beer
 
 Demo for RediSearch using the https://openbeerdb.com/ dataset.
