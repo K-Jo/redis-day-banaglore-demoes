@@ -1,0 +1,4 @@
+[submodule "beerloader-graph/redisgraph-bulk-loader"]
+	path = beerloader-graph/redisgraph-bulk-loader
+	url = https://github.com/RedisGraph/redisgraph-bulk-loader.git
+	branch = master
