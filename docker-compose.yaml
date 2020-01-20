@@ -1,0 +1,23 @@
+version: '3'
+services:
+  redisearch:
+    image: "redislabs/redisearch:1.6.5"
+    ports:
+      - "6379:6379"
+  redisgraph:
+    image: "redislabs/redisgraph:1.99.8"
+    ports:
+      - "6380:6379"
+  redistimeseries:
+    image: "redislabs/redistimeseries:1.2.0"
+    ports:
+      - "6381:6379"
+  beerloader:
+    build: ./beerloader/.
+    depends_on:
+      - redisearch
+    command: ['import.py', '--url', 'redis://redisearch:6379']
+  redisinight:
+    image: "redislabs/redisinsight:1.1.0"
+    ports:
+      - "8001:8001"
