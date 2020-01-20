@@ -12,8 +12,8 @@ services:
     image: "redislabs/redistimeseries:1.2.0"
     ports:
       - "6381:6379"
-  beerloader:
-    build: ./beerloader/.
+  beerloader-search:
+    build: ./beerloader-search/.
     depends_on:
       - redisearch
     command: ['import.py', '--url', 'redis://redisearch:6379']
