@@ -24,7 +24,17 @@ services:
     environment:
       - REDIS_HOST=redisgraph
     command: ['python', 'loader.py']
-  redisinight:
+  redisinsight:
     image: "redislabs/redisinsight:1.2.0-rc1"
     ports:
       - "8001:8001"
+  dbloader:
+    build: ./dbloader/.
+    depends_on: 
+      - redisinsight
+      - redisearch
+      - redisgraph
+      - redistimeseries
+    environment:
+      - APP_URL=http://redisinsight:8001
+    command: ['python', 'dbloader.py', "--db_urls=redisearch:6379;redistimeseries:6379;redisgraph:6379"]
