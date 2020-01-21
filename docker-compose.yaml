@@ -21,7 +21,9 @@ services:
     build: ./beerloader-graph/.
     depends_on:
       - redisgraph
-    command: ['redisgraph-bulk-loader/bulk_insert.py', 'beerGraph', '-h', 'redisgraph']
+    environment:
+      - REDIS_HOST=redisgraph
+    command: ['python', 'loader.py']
   redisinight:
     image: "redislabs/redisinsight:1.2.0-rc1"
     ports:
