@@ -4,11 +4,11 @@ services:
     image: "redislabs/redisearch:1.6.5"
     ports:
       - "6379:6379"
-  redisgraph:
+  redisgraphv2.0:
     image: "redislabs/redisgraph:1.99.8"
     ports:
       - "6380:6379"
-  redisgraph-old:
+  redisgraphv1.2:
     image: redislabs/redisgraph:1.2.2
     ports:
       - "6381:6379"
@@ -21,19 +21,19 @@ services:
     depends_on:
       - redisearch
     command: ['import.py', '--url', 'redis://redisearch:6379']
-  beerloader-graph:
+  beerloader-graphv1.2:
     build: ./beerloader-graph/.
     depends_on:
-      - redisgraph
+      - redisgraphv1.2
     environment:
-      - REDIS_HOST=redisgraph
+      - REDIS_HOST=redisgraphv1.2
     command: ['python', 'loader.py']
-  beerloader-graph-2:
+  beerloader-graphv2.0:
     build: ./beerloader-graph/.
     depends_on:
-      - redisgraph-old
+      - redisgraphv2.0
     environment:
-      - REDIS_HOST=redisgraph-old
+      - REDIS_HOST=redisgraphv2.0
     command: ['python', 'loader.py']
   redisinsight:
     image: "redislabs/redisinsight:1.2.0-rc1"
@@ -41,12 +41,12 @@ services:
       - "8001:8001"
   dbloader:
     build: ./dbloader/.
-    depends_on: 
+    depends_on:
       - redisinsight
       - redisearch
-      - redisgraph
-      - redisgraph-old
+      - redisgraphv1.2
+      - redisgraphv2.0
       - redistimeseries
     environment:
       - APP_URL=http://redisinsight:8001
-    command: ['python', 'dbloader.py', "--db_urls=redisearch:6379;redistimeseries:6379;redisgraph:6379;redisgraph-old:6379"]
+    command: ['python', 'dbloader.py', "--db_urls=redisearch:6379;redistimeseries:6379;redisgraphv2.0:6379;redisgraphv1.2:6379"]
