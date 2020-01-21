@@ -152,7 +152,6 @@ def import_beer():
                 relationship = 'LOCATED_IN'
                 beer_redis_graph.add_edge_lazy(label, 'gid', id, relationship, dest_label, 'bwid', brew_id)
 
-
     beers = {}
 
     with open('data/beers.csv') as csvfile:
@@ -195,6 +194,31 @@ def import_beer():
                 dest_label = 'Style'
                 relationship = 'IS_STYLE'
                 beer_redis_graph.add_edge_lazy(label, 'bid', id, relationship, dest_label, 'sid', style_id)
+
+
+    persons = {}
+
+    with open('data/person.csv') as csvfile:
+        reader = csv.reader(csvfile)
+        header = next(reader)
+        label = 'Person'
+
+        for row in reader:
+            id = row[0]
+            name = row[1]
+            props = f'{{pid:{id},name:"{name}"}}'
+            node = Node(label, props)
+            persons[id] = node
+            beer_redis_graph.add_node(node)
+
+    with open('data/person_likes_beer.csv') as csvfile:
+        reader = csv.reader(csvfile)
+        header = next(reader)
+        for row in reader:
+            pid = row[0]
+            bid = row[1]
+            beer_redis_graph.add_edge_lazy('Person', 'pid', pid, 'LIKES', 'Beer', 'bid', bid)
+
 
     beer_redis_graph.commit()
 
