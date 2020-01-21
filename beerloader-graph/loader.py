@@ -1,8 +1,10 @@
 import csv
-import redis
 import random
 import string
 import os
+
+import redis
+
 
 def random_string(length=5):
     return ''.join(random.choice(string.ascii_lowercase) for _ in range(length))
