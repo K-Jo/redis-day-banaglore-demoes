@@ -23,6 +23,6 @@ services:
       - redisgraph
     command: ['redisgraph-bulk-loader/bulk_insert.py', 'beerGraph', '-h', 'redisgraph']
   redisinight:
-    image: "redislabs/redisinsight:1.1.0"
+    image: "redislabs/redisinsight:1.2.0-rc1"
     ports:
       - "8001:8001"
