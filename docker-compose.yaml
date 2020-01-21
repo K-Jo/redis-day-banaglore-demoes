@@ -28,6 +28,13 @@ services:
     environment:
       - REDIS_HOST=redisgraph
     command: ['python', 'loader.py']
+  beerloader-graph-2:
+    build: ./beerloader-graph/.
+    depends_on:
+      - redisgraph-old
+    environment:
+      - REDIS_HOST=redisgraph-old
+    command: ['python', 'loader.py']
   redisinsight:
     image: "redislabs/redisinsight:1.2.0-rc1"
     ports:
