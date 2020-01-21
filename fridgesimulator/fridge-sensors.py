@@ -64,8 +64,8 @@ def main_loop(r: redis.Redis):
             curr_temp = r.get(temperature_key)
             curr_beer_count = r.get(beer_count_key)
             ts = int(time.time())
-            r.execute_command('TS.ADD', f'temperature:{fridge_id}', ts, curr_temp, 'LABELS', 'fridge_id', fridge_id, '__name__', 'temperature')
-            r.execute_command('TS.ADD', f'beer_count:{fridge_id}', ts, curr_beer_count, 'LABELS', 'fridge_id', fridge_id, '__name__', 'beer_count')
+            r.execute_command('TS.ADD', f'temperature:{fridge_id}', ts, curr_temp, 'LABELS', 'fridge_id', fridge_id, '__name__', 'temperature', '__class__', 'fridge')
+            r.execute_command('TS.ADD', f'beer_count:{fridge_id}', ts, curr_beer_count, 'LABELS', 'fridge_id', fridge_id, '__name__', 'beer_count', '__class__', 'fridge')
         time.sleep(1)
 
 
