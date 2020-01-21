@@ -56,8 +56,9 @@ def main_loop(r: redis.Redis):
         for fridge_id in FRIDGE_IDS:
             temperature_key = FRIDGE_TEMPERATURE_KEY_TEMPLATE.format(fridge_id=fridge_id)
             curr_temp = r.get(temperature_key)
+            ts = int(time.time())
             # print("fridge", fridge_id, 'temperature', curr_temp)
-            r.execute_command('TS.ADD', f'temperature:{fridge_id}', '*', curr_temp, 'LABELS', 'fridge_id', fridge_id)
+            r.execute_command('TS.ADD', f'temperature:{fridge_id}', ts, curr_temp, 'LABELS', 'fridge_id', fridge_id)
         time.sleep(1)
 
 
