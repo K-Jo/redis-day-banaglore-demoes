@@ -22,3 +22,13 @@ $ redis-cli
 
 ## RedisInsight
 http://localhost:8001/
+
+## TimeSeries Demo
+
+1. `pip install click redis`
+1. `python3 ./fridgesimulator/fridge-sensors.py --port 6382`
+1. In RedisInsight, go to the "redistimeseries" db and switch to RedisTimeSeries tool
+1. Run query: `TS.MRANGE - + FILTER __class__=fridge`
+1. Set Y-axis min to 0 and max to 40
+1. Toggle on auto-update (top-right side of query card)
+1. Open a fridge, take some beers and then close it
