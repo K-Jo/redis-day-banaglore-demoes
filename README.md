@@ -25,10 +25,32 @@ http://localhost:8001/
 
 ## TimeSeries Demo
 
-1. `pip install click redis`
-1. `python3 ./fridgesimulator/fridge-sensors.py --port 6382`
+1. Install python deps
+   ```bash
+   pip install click redis
+   ```
+1. Run fridge simulator script:
+   ```bash
+   python3 ./fridgesimulator/fridge-sensors.py --port 6382
+   ```
 1. In RedisInsight, go to the "redistimeseries" db and switch to RedisTimeSeries tool
-1. Run query: `TS.MRANGE - + FILTER __class__=fridge`
-1. Set Y-axis min to 0 and max to 40
+1. Run query: 
+   ```
+   TS.MRANGE - + FILTER __class__=fridge
+   ```
+1. Set Y-axis min to `0` and max to `40`
 1. Toggle on auto-update (top-right side of query card)
-1. Open a fridge, take some beers and then close it
+1. Switch to the fridge simulator terminal. Open a fridge, take some beers and then close it
+
+## RedisGraph Demo
+1. Create full-text index on brewery name: 
+   ```
+   CALL db.idx.fulltext.createNodeIndex('Brewery', 'name')
+   ```
+2. Run
+   ```cypher
+    CALL db.idx.fulltext.queryNodes('Brewery', '%brew%') yield node
+    MATCH (node)<-[:BREWED_BY]-(b)<-[:LIKES]-(:Person {pid:26})
+    WITH node, count(b) as count
+    RETURN node.name, count ORDER BY count DESC limit 10
+   ```
