@@ -1,5 +1,3 @@
-# NEEDS UPDATING
-
 # Modules demoes given with RedisInsight during Redis Day Bangalore 2020
 
 Demoes using the https://openbeerdb.com/ dataset.
@@ -15,13 +13,14 @@ If something went wrong, you might need to force docker-compose to rebuild the c
 ```
 $ docker-compose up --force-recreate --build
 ```
-Open a second terminal to connect to redis and explore the dataset:
-```
-$ redis-cli
-```
 
 ## RedisInsight
 http://localhost:8001/
+
+## RediSearch Demo
+
+1. Search for your favourite beer in the beer index
+1. Add an `alias` to the index and query the alias for your favourite beer
 
 ## TimeSeries Demo
 
@@ -50,7 +49,7 @@ http://localhost:8001/
 2. Run
    ```cypher
     CALL db.idx.fulltext.queryNodes('Brewery', '%brew%') yield node
-    MATCH (node)<-[:BREWED_BY]-(b)<-[:LIKES]-(:Person {pid:26})
+    MATCH (node)<-[:BREWED_BY]-(b)<-[:LIKES]-(:Person {pid:46})
     WITH node, count(b) as count
     RETURN node.name, count ORDER BY count DESC limit 10
    ```
